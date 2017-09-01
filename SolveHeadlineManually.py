@@ -16,7 +16,13 @@ def solveWord(word, possibles, mapping):
         except ValueError:
             print('Incorrect choice. Try again.')
             error = True
-    newMapping = {word[n]: possibles[selection][n] for n in range(len(word))}
+    newWord = ''
+    if selection == -1:
+        newWord = input('Enter your custom word: ').upper()
+    newMapping = ({word[n]: possibles[selection][n] for n in range(len(word))}
+                  if selection != -1
+                  else {word[n]: newWord[n]
+                  for n in range(len(word))})
     return (possibles[selection], {**mapping, **newMapping})
 
 
@@ -56,6 +62,9 @@ def solveHeadline(tree, line):
         while(error):
             try:
                 selection = int(input('Please select a word or -1 to exit: '))
+                if selection == -1:
+                    print('Quitting without Saving any work...')
+                    return unMakeTuple(selected)
                 error = False
                 if selection in wordsDone:
                     raise IndexError('Selection not in list')
@@ -74,6 +83,9 @@ def solveHeadline(tree, line):
                 wordsDone.append(i)
         temp = newLine.rstrip()
         possibles = []
+    finished = unMakeTuple((temp, selected[1]))
+    print(finished)
+    return finished
 
 
 # make the clue into a tuple - operable string, pretty string
