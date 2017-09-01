@@ -5,7 +5,17 @@ from WordTree import *
 def solveWord(word, possibles, mapping):
     for i, possible in enumerate(possibles):
         print('{} -> {}'.format(i, possible))
-    selection = int(input('Please select a word or -1 to enter your own: '))
+    error = True
+    selection = 0
+    # error checking
+    while(error):
+        try:
+            selection = int(input('Please select a word ' +
+                                  'or -1 to enter your own: '))
+            error = False
+        except ValueError:
+            print('Incorrect choice. Try again.')
+            error = True
     print(word)
     newMapping = {word[n]: possibles[selection][n] for n in range(len(word))}
     return {**mapping, **newMapping}
@@ -21,8 +31,19 @@ def solveHeadline(tree, line):
         lst = getWords(tree, word, mapping)
         print('{} -> {} word possibilities'.format(i, len(lst)))
         possibles.append(lst)
-    selection = int(input('Please select a word: '))
-    print(solveWord(selected[0].split()[selection], possibles[selection], mapping))
+    error = True
+    selection = 0
+    # error checking
+    while(error):
+        try:
+            selection = int(input('Please select a word: '))
+            error = False
+        except ValueError:
+            print('Incorrect choice. Try again.')
+            error = True
+    print(solveWord(selected[0].split()[selection],
+                    possibles[selection], mapping))
+
 
 # make the clue into a tuple - readable format and one we can operate on
 def makeTuple(clue):
