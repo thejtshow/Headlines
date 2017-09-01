@@ -1,17 +1,28 @@
 from WordTree import *
 
 
+# sovle a word
+def solveWord(word, possibles, mapping):
+    for i, possible in enumerate(possibles):
+        print('{} -> {}'.format(i, possible))
+    selection = int(input('Please select a word or -1 to enter your own: '))
+    print(word)
+    newMapping = {word[n]: possibles[selection][n] for n in range(len(word))}
+    return {**mapping, **newMapping}
+
+
 # try to start solving headline
 def solveHeadline(tree, line):
     selected = makeTuple(line)
     print('selection: {}'.format(selected[1]))
     possibles = []
-    mapping = []
+    mapping = {}
     for i, word in enumerate(selected[0].split()):
         lst = getWords(tree, word, mapping)
         print('{} -> {} word possibilities'.format(i, len(lst)))
         possibles.append(lst)
-
+    selection = int(input('Please select a word: '))
+    print(solveWord(selected[0].split()[selection], possibles[selection], mapping))
 
 # make the clue into a tuple - readable format and one we can operate on
 def makeTuple(clue):
