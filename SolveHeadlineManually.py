@@ -117,6 +117,8 @@ def getWords(tree, word, mapping):
 def checkMapping(word, possible,  mapping):
     for i, letter in enumerate(possible):
         if word[i] not in mapping.keys():
+            if letter in mapping.values():
+                return False
             continue
         if mapping[word[i]] == letter:
             continue
