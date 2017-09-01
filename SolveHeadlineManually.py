@@ -1,13 +1,14 @@
 from WordTree import *
 
 
-# try to start solving headlines
-def solveHeadlines(tree, line):
+# try to start solving headline
+def solveHeadline(tree, line):
     selected = makeTuple(line)
     print('selection: {}'.format(selected[1]))
     for i, word in enumerate(selected[0].split()):
         lst = getWords(tree, word)
         print('{} -> {} word possibilities'.format(i, len(lst)))
+    print(unMakeTuple(selected))
 
 
 # make the clue into a tuple - readable format and one we can operate on
@@ -21,6 +22,22 @@ def makeTuple(clue):
         else:
             pair[0] += ' '
     return pair
+
+
+# get the full string with punctuation back
+def unMakeTuple(clue):
+    clean, full = clue
+    i = 0
+    newString = ''
+    for character in full:
+        if not character.isalpha() and character != ' ':
+            newString += character
+        else:
+            while character != ' ' and clean[i] == ' ':
+                i += 1
+            newString += clean[i]
+            i += 1
+    return newString
 
 
 # get a list of all words that have the same pattern as the original

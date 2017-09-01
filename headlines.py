@@ -4,9 +4,10 @@ from WordTree import *
 
 
 # get a headline choice
-def pickHeadline(C1, C2, C3, C4, C5):
+def pickHeadline(headlines):
     selected = None
     error = True
+    C1, C2, C3, C4, C5 = headlines
     while(error):
         # print out all the headlines
         print('{}\n{}\n{}\n{}\n{}\n'.format(C1, C2, C3, C4, C5))
@@ -19,8 +20,8 @@ def pickHeadline(C1, C2, C3, C4, C5):
     return selected
 
 
-# where shit happens
-def main():
+# initialization
+def initialize():
     print('Building Word Tree...')
     tree = buildtree(argv[1])
     print('Done!\nGetting Clues from file...')
@@ -28,8 +29,13 @@ def main():
                           in enumerate(open(argv[2], 'r'))
                           if i < 5]  # only gets the first 5 lines of clues
     print('Done!')
-    line = pickHeadline(C1, C2, C3, C4, C5)
-    solveHeadlines(tree, line)
+    return (tree, (C1, C2, C3, C4, C5))
+
+
+# where shit happens
+def main():
+    tree, headlines = initialize()
+    solveHeadline(tree, pickHeadline(headlines))
 
 
 # make sure shit happens
