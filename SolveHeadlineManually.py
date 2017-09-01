@@ -25,7 +25,7 @@ def getMapMax(line):
     alpha = []
     count = 0
     for letter in line:
-        if letter not in alpha:
+        if letter not in alpha and letter.isalpha():
             count += 1
             alpha += letter
     return count
