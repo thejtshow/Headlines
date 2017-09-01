@@ -34,11 +34,13 @@ def getMapMax(line):
 # try to start solving headline
 def solveHeadline(tree, line):
     selected = makeTuple(line)
+    temp = selected[0]
     print('selection: {}'.format(selected[1]))
     possibles = []
     mapping = {}
     mapMax = getMapMax(line)
     while len(mapping) < mapMax:
+        print(unMakeTuple((temp, selected[1])))
         for i, word in enumerate(selected[0].split()):
             lst = getWords(tree, word, mapping)
             print('{}\t-> {}\t-> {} word possibilities'.format(i,
@@ -49,7 +51,7 @@ def solveHeadline(tree, line):
         # error checking
         while(error):
             try:
-                selection = int(input('Please select a word: '))
+                selection = int(input('Please select a word or -1 to exit: '))
                 error = False
             except ValueError:
                 print('Incorrect choice. Try again.')
@@ -60,13 +62,13 @@ def solveHeadline(tree, line):
         for i, word in enumerate(selected[0].split()):
             for letter in word:
                 newLine += (mapping[letter] if letter in mapping.keys()
-                            else letter)
+                            else '_')
             newLine += ' '
-        selected[0] = newLine.rstrip()
+        temp = newLine.rstrip()
         possibles = []
 
 
-# make the clue into a tuple - readable format and one we can operate on
+# make the clue into a tuple - operable string, pretty string
 def makeTuple(clue):
     pair = ['', clue]
     for i, character in enumerate(clue):
