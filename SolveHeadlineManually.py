@@ -16,9 +16,19 @@ def solveWord(word, possibles, mapping):
         except ValueError:
             print('Incorrect choice. Try again.')
             error = True
-    print(word)
     newMapping = {word[n]: possibles[selection][n] for n in range(len(word))}
-    return {**mapping, **newMapping}
+    return (possibles[selection], {**mapping, **newMapping})
+
+
+# get the max size of the dictionary
+def getMapMax(line):
+    alpha = []
+    count = 0
+    for letter in line:
+        if letter not in alpha:
+            count += 1
+            alpha += letter
+    return count
 
 
 # try to start solving headline
@@ -27,22 +37,33 @@ def solveHeadline(tree, line):
     print('selection: {}'.format(selected[1]))
     possibles = []
     mapping = {}
-    for i, word in enumerate(selected[0].split()):
-        lst = getWords(tree, word, mapping)
-        print('{} -> {} word possibilities'.format(i, len(lst)))
-        possibles.append(lst)
-    error = True
-    selection = 0
-    # error checking
-    while(error):
-        try:
-            selection = int(input('Please select a word: '))
-            error = False
-        except ValueError:
-            print('Incorrect choice. Try again.')
-            error = True
-    print(solveWord(selected[0].split()[selection],
-                    possibles[selection], mapping))
+    mapMax = getMapMax(line)
+    while len(mapping) < mapMax:
+        for i, word in enumerate(selected[0].split()):
+            lst = getWords(tree, word, mapping)
+            print('{}\t-> {}\t-> {} word possibilities'.format(i,
+                                                               word, len(lst)))
+            possibles.append(lst)
+        error = True
+        selection = 0
+        # error checking
+        while(error):
+            try:
+                selection = int(input('Please select a word: '))
+                error = False
+            except ValueError:
+                print('Incorrect choice. Try again.')
+                error = True
+        solvedWord, mapping = solveWord(selected[0].split()[selection],
+                                        possibles[selection], mapping)
+        newLine = ''
+        for i, word in enumerate(selected[0].split()):
+            for letter in word:
+                newLine += (mapping[letter] if letter in mapping.keys()
+                            else letter)
+            newLine += ' '
+        selected[0] = newLine.rstrip()
+        possibles = []
 
 
 # make the clue into a tuple - readable format and one we can operate on
