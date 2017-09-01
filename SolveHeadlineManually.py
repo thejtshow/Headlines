@@ -39,9 +39,13 @@ def solveHeadline(tree, line):
     possibles = []
     mapping = {}
     mapMax = getMapMax(line)
+    wordsDone = []
     while len(mapping) < mapMax:
         print(unMakeTuple((temp, selected[1])))
         for i, word in enumerate(selected[0].split()):
+            if i in wordsDone:
+                possibles.append([])
+                continue
             lst = getWords(tree, word, mapping)
             print('{}\t-> {}\t-> {} word possibilities'.format(i,
                                                                word, len(lst)))
@@ -53,7 +57,9 @@ def solveHeadline(tree, line):
             try:
                 selection = int(input('Please select a word or -1 to exit: '))
                 error = False
-            except ValueError:
+                if selection in wordsDone:
+                    raise IndexError('Selection not in list')
+            except (ValueError, IndexError):
                 print('Incorrect choice. Try again.')
                 error = True
         solvedWord, mapping = solveWord(selected[0].split()[selection],
@@ -64,6 +70,8 @@ def solveHeadline(tree, line):
                 newLine += (mapping[letter] if letter in mapping.keys()
                             else '_')
             newLine += ' '
+            if '_' not in newLine.split()[i]:
+                wordsDone.append(i)
         temp = newLine.rstrip()
         possibles = []
 
