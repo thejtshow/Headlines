@@ -6,8 +6,9 @@ def solveHeadline(tree, line):
     selected = makeTuple(line)
     print('selection: {}'.format(selected[1]))
     possibles = []
+    mapping = []
     for i, word in enumerate(selected[0].split()):
-        lst = getWords(tree, word)
+        lst = getWords(tree, word, mapping)
         print('{} -> {} word possibilities'.format(i, len(lst)))
         possibles.append(lst)
 
@@ -42,10 +43,22 @@ def unMakeTuple(clue):
 
 
 # get a list of all words that have the same pattern as the original
-def getWords(tree, word):
+def getWords(tree, word, mapping):
     case = getPattern(word)
     return [possible for possible in generator(tree, len(word))
-            if case == getPattern(possible)]  # only add if pattern matches
+            if case == getPattern(possible)  # only add if pattern matches
+            and checkMapping(word, possible, mapping)]  # check against map
+
+
+# check that the words fits with the current mapping
+def checkMapping(word, possible,  mapping):
+    for i, letter in enumerate(possible):
+        if word[i] not in mapping.keys():
+            continue
+        if mapping[word[i]] == letter:
+            continue
+        return False
+    return True
 
 
 # return the character pattern of the given input word
