@@ -35,8 +35,25 @@ def initialize():
 # where shit happens
 def main():
     tree, headlines = initialize()
-    solved = solveHeadline(tree, pickHeadline(headlines))
-    print(solved[1])
+    while True:
+        try:
+            selection = int(input('What would you like to do?\n' +
+                                  '1.\tSolve a Headline Manually\n' +
+                                  '2.\tView Discovered Chains\n'
+                                  '3.\tBuild a Matrix\n' +
+                                  '4.\tReset a Headline and its Chains\n'))
+        except ValueError:
+            print('Invalid selection, try again')
+            continue
+        if selection == 1:
+            solved = solveHeadline(tree, pickHeadline(headlines))
+            continue
+        if selection == 2:
+            continue
+        if selection == 3:
+            continue
+        if selection == 4:
+            continue
 
 
 # make sure shit happens
