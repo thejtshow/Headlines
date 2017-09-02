@@ -1,3 +1,6 @@
+from copy import deepcopy
+
+
 # make chains from a given mapping
 def makeChains(mapping):
     chains = []
@@ -10,10 +13,13 @@ def makeChains(mapping):
                 char = mapping[char]
         except KeyError:
             chains.append(word)
-    return chains
+    return thinChains(chains)
 
 
 # keep only unique chains
 def thinChains(chains):
-    uniqueChains = []
+    uniqueChains = deepcopy(chains)
+    for chain in chains:
+        if any(chain in test for test in chains if len(test) > len(chain)):
+            uniqueChains.remove(chain)
     return uniqueChains

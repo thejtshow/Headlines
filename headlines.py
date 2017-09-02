@@ -14,7 +14,7 @@ def pickHeadline(headlines):
         try:
             selected = eval('C' + input('Please pick a headline [1-5]: '))
             error = False
-        except NameError:
+        except (NameError, IndexError):
             print('Incorrect choice. Try again.')
             error = True
     return selected
@@ -37,6 +37,7 @@ def main():
     tree, headlines = initialize()
     solved = solveHeadline(tree, pickHeadline(headlines))
     print(solved[1])
+
 
 # make sure shit happens
 if __name__ == '__main__':
