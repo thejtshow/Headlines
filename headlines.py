@@ -35,8 +35,8 @@ def initialize():
 # where shit happens
 def main():
     tree, headlines = initialize()
-    solveHeadline(tree, pickHeadline(headlines))
-
+    solved = solveHeadline(tree, pickHeadline(headlines))
+    print(solved[1])
 
 # make sure shit happens
 if __name__ == '__main__':

@@ -1,4 +1,5 @@
 from WordTree import *
+from Chains import *
 
 
 # sovle a word
@@ -85,7 +86,7 @@ def solveHeadline(tree, line):
         possibles = []
     finished = unMakeTuple((temp, selected[1]))
     print(finished)
-    return finished
+    return (finished, makeChains(mapping))
 
 
 # make the clue into a tuple - operable string, pretty string
