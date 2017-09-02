@@ -10,7 +10,7 @@ def pickHeadline(headlines):
     C1, C2, C3, C4, C5 = headlines
     while(error):
         # print out all the headlines
-        print('{}\n{}\n{}\n{}\n{}\n'.format(C1, C2, C3, C4, C5))
+        print('{}\n{}\n{}\n{}\n{}\n'.format(C1[0], C2[0], C3[0], C4[0], C5[0]))
         try:
             selected = eval('C' + input('Please pick a headline [1-5]: '))
             error = False
@@ -29,7 +29,7 @@ def initialize():
                           in enumerate(open(argv[2], 'r'))
                           if i < 5]  # only gets the first 5 lines of clues
     print('Done!')
-    return (tree, (C1, C2, C3, C4, C5))
+    return (tree, ((C1, []), (C2, []), (C3, []), (C4, []), (C5, [])))
 
 
 # where shit happens
@@ -48,7 +48,7 @@ def main():
         # solve a headline manually
         if selection == 1:
             line = pickHeadline(headlines)
-            solved = solveHeadline(tree, line)
+            solved = solveHeadline(tree, line[0])
             if solved is not None:
                 # successfully solved a headline, update the headlines
                 continue
