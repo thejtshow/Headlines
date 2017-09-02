@@ -45,13 +45,20 @@ def main():
         except ValueError:
             print('Invalid selection, try again')
             continue
+        # solve a headline manually
         if selection == 1:
-            solved = solveHeadline(tree, pickHeadline(headlines))
-            continue
+            line = pickHeadline(headlines)
+            solved = solveHeadline(tree, line)
+            if solved is not None:
+                # successfully solved a headline, update the headlines
+                continue
+        # View Discovered chains
         if selection == 2:
             continue
+        # Build a matrix
         if selection == 3:
             continue
+        # Reset a headline and its chains
         if selection == 4:
             continue
 
