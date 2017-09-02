@@ -65,7 +65,7 @@ def solveHeadline(tree, line):
                 selection = int(input('Please select a word or -1 to exit: '))
                 if selection == -1:
                     print('Quitting without Saving any work...')
-                    return unMakeTuple(selected)
+                    return None
                 error = False
                 if selection in wordsDone:
                     raise IndexError('Selection not in list')
@@ -84,9 +84,7 @@ def solveHeadline(tree, line):
                 wordsDone.append(i)
         temp = newLine.rstrip()
         possibles = []
-    finished = unMakeTuple((temp, selected[1]))
-    print(finished)
-    return (finished, makeChains(mapping))
+    return (unMakeTuple((temp, selected[1])), makeChains(mapping))
 
 
 # make the clue into a tuple - operable string, pretty string
