@@ -29,6 +29,13 @@ def pickHeadline(headlines):
     return selected
 
 
+# print the sets of chains
+def printChains(clues):
+    for i, (_, chain) in enumerate(clues):
+        print('{} -> {}'.format(i + 1, chain))
+    input('Press Enter to continue...')
+
+
 # initialization
 def initialize():
     print('Building Word Tree...')
@@ -69,6 +76,7 @@ def main():
                 continue
         # View Discovered chains
         if selection == 2:
+            printChains(headlines)
             continue
         # Build a matrix
         if selection == 3:

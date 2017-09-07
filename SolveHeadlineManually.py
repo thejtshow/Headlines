@@ -19,7 +19,11 @@ def solveWord(word, possibles, mapping):
             error = True
     newWord = ''
     if selection == -1:
-        newWord = input('Enter your custom word: ').upper()
+        newWord = input('Enter your custom word ' +
+                        '(or nothing to return): ').upper()
+        if newWord == '':
+            return (None, None)
+
     newMapping = ({word[n]: possibles[selection][n] for n in range(len(word))}
                   if selection != -1
                   else {word[n]: newWord[n]
@@ -74,6 +78,8 @@ def solveHeadline(tree, line):
                 error = True
         solvedWord, mapping = solveWord(selected[0].split()[selection],
                                         possibles[selection], mapping)
+        if solvedWord is None:
+            continue
         newLine = ''
         for i, word in enumerate(selected[0].split()):
             for letter in word:
